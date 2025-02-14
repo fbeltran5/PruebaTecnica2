@@ -1,0 +1,18 @@
+@model TaskManager.Models.Tarea
+
+@{
+    ViewData["Title"] = "Detalles de la Tarea";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h3><strong>Título:</strong> @Model.Title</h3>
+    <div><strong>Descripción:</strong> @Model.Description</div>
+    <div><strong>Categoría:</strong> @Model.Category?.Name</div>
+    <div><strong>Prioridad:</strong> @Model.Priority</div>
+    <div><strong>Estado:</strong> @(Model.IsCompleted ? "Completada" : "Pendiente")</div>
+    <div><strong>Fecha de Vencimiento:</strong> @Model.DueDate?.ToString("d")</div>
+</div>
+
+<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Volver a la lista de tareas</a>

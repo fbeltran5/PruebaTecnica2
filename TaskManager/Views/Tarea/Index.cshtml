@@ -1,0 +1,39 @@
+@model IEnumerable<TaskManager.Models.Tarea>
+
+@{
+    ViewData["Title"] = "Lista de Tareas";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Categoría</th>
+            <th>Prioridad</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tarea in Model)
+        {
+            <tr>
+                <td>@tarea.Title</td>
+                <td>@tarea.Description</td>
+                <td>@tarea.Category?.Name</td>
+                <td>@tarea.Priority</td>
+                <td>@(tarea.IsCompleted ? "Completada" : "Pendiente")</td>
+                <td>
+                    <a href="@Url.Action("Details", "Tarea", new { id = tarea.Id })" class="btn btn-info btn-sm">Detalles</a>
+                    <a href="@Url.Action("Edit", "Tarea", new { id = tarea.Id })" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="@Url.Action("Delete", "Tarea", new { id = tarea.Id })" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "Tarea")" class="btn btn-primary">Crear Nueva Tarea</a>

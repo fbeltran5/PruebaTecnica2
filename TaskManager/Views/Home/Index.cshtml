@@ -1,0 +1,47 @@
+﻿@model IEnumerable<TaskManager.Models.Tarea>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskManager - Página de Inicio</title>
+</head>
+<body>
+    <h1>TaskManager para Memorandum</h1>
+    <h2>Lista de Tareas</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Categoría</th>
+                <th>Prioridad</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tarea in Model)
+            {
+                <tr>
+                    <td>@tarea.Title</td>
+                    <td>@tarea.Description</td>
+                    <td>@tarea.Category?.Name</td>
+                    <td>@tarea.Priority</td>
+                    <td>@(tarea.IsCompleted ? "Completada" : "Pendiente")</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Tarea", new { id = tarea.Id })">Editar</a> |
+                        <a href="@Url.Action("Details", "Tarea", new { id = tarea.Id })">Detalles</a> |
+                        <a href="@Url.Action("Delete", "Tarea", new { id = tarea.Id })">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <br />
+    <a href="@Url.Action("Create", "Tarea")">Crear Nueva Tarea</a>
+</body>
+</html>

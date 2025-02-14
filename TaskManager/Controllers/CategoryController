@@ -1,0 +1,45 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using TaskManager.Data;
+using TaskManager.Models;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace TaskManager.Controllers
+{
+    public class CategoryController : Controller
+    {
+        private readonly TaskManagerContext _context;
+
+        public CategoryController(TaskManagerContext context)
+        {
+            _context = context;
+        }
+
+        // GET: Category
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Categories.ToListAsync());
+        }
+
+        // GET: Category/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Category/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Name")] Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(category);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(category);
+        }
+    }
+}
